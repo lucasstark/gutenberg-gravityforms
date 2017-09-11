@@ -56,12 +56,12 @@
                         SelectControl,
                         {
                             label:  __('Gravity Form', 'gutenberg-gravityforms'),
-                            selected: parseInt(props.attributes.form_id),
+                            value: parseInt(props.attributes.form_id),
                             instanceId: 'gravity-form-selector',
                             onChange: function (value) {
                                 props.setAttributes({form_id: value});
                             },
-                            options: gb_gravityforms_block_params.forms
+                            options: gb_gravityforms_block_params.forms,
                         }
                     ),
                     el(
@@ -111,7 +111,7 @@
                         }
                     )
                 ),
-                el('div', {}, i18n.__('Form'))
+                el('div', {}, __('Gravity Form: ') + gb_gravityforms_block_params.formMeta[ props.attributes.form_id ].title)
             ];
         },
         save: function () {

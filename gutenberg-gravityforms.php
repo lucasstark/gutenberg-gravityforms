@@ -13,10 +13,9 @@
  */
 
 // Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) ) {
+if ( !defined( 'ABSPATH' ) ) {
 	exit;
 }
-
 
 
 class GB_Gravity_Forms {
@@ -94,16 +93,21 @@ class GB_Gravity_Forms {
 			$this->assets_version );
 
 
-		$forms = array();
+		$forms    = array();
+		$formmeta = array();
 		foreach ( GFAPI::get_forms() as $form ) {
 			$forms[] = array(
 				'value' => $form['id'],
 				'label' => $form['title']
 			);
+
+			$formmeta[ $form['id'] ] = array( 'title' => $form['title'] );
+
 		}
 
 		wp_localize_script( 'gb-gravityforms-block', 'gb_gravityforms_block_params', array(
-			'forms' => $forms
+			'forms'    => $forms,
+			'formMeta' => $formmeta
 		) );
 
 

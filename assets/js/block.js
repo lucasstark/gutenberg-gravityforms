@@ -13,8 +13,6 @@
     var InspectorControls = wp.blocks.InspectorControls;
     var SelectControl = wp.blocks.InspectorControls.SelectControl;
     var ToggleControl = wp.blocks.InspectorControls.ToggleControl;
-    var Editable = wp.blocks.Editable; // Editable component of React.
-    var children = wp.blocks.query.children; // The children() function to extract child nodes from a paragraph of rich text.
 
 
     var blockStyle = {
@@ -28,11 +26,23 @@
         icon: 'media-spreadsheet',
         category: 'layout',
 
-        defaultAttributes: {
-            form_id: '',
-            displayFormTitle: true,
-            displayFormDescription: true,
-            enableAjax : false
+        attributes: {
+            form_id: {
+                type : 'string'
+            },
+            displayFormTitle : {
+                type: 'bool',
+                default : true
+            },
+            displayFormDescription : {
+                type : 'bool',
+                default : true
+            },
+            enableAjax : {
+                type : 'bool',
+                default : false
+            }
+
         },
 
         edit: function (props) {
@@ -45,14 +55,11 @@
                     el(
                         SelectControl,
                         {
-                            label: 'Gravity Form',
+                            label:  __('Gravity Form', 'gutenberg-gravityforms'),
                             selected: parseInt(props.attributes.form_id),
                             instanceId: 'gravity-form-selector',
-                            onBlur: function (value) {
+                            onChange: function (value) {
                                 props.setAttributes({form_id: value});
-                            },
-                            onChange: function (event) {
-                                props.setAttributes({form_id: event.target.value});
                             },
                             options: gb_gravityforms_block_params.forms
                         }

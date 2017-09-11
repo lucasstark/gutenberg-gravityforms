@@ -22,7 +22,7 @@ class GB_Gravity_Forms_Form_Block {
 
 	public function on_init() {
 		register_block_type( 'gutenberg-gravityforms/single-form', array(
-			'render' => array( $this, 'on_render_block' )
+			'render_callback' => array( $this, 'on_render_block' )
 		) );
 	}
 

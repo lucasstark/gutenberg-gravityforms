@@ -5,11 +5,10 @@
 
 
 (function (blocks, i18n, element) {
-    var el = element.createElement;
-    var __ = i18n.__;
 
     var __ = wp.i18n.__; // The __() for internationalization.
     var el = wp.element.createElement; // The wp.element.createElement() function to create elements.
+
     var InspectorControls = wp.blocks.InspectorControls;
     var SelectControl = wp.blocks.InspectorControls.SelectControl;
     var ToggleControl = wp.blocks.InspectorControls.ToggleControl;
@@ -28,25 +27,27 @@
 
         attributes: {
             form_id: {
-                type : 'string'
+                type: 'string'
             },
-            displayFormTitle : {
+            displayFormTitle: {
                 type: 'bool',
-                default : true
+                default: true
             },
-            displayFormDescription : {
-                type : 'bool',
-                default : true
+            displayFormDescription: {
+                type: 'bool',
+                default: true
             },
-            enableAjax : {
-                type : 'bool',
-                default : false
+            enableAjax: {
+                type: 'bool',
+                default: false
             }
 
         },
 
         edit: function (props) {
             var focus = props.focus;
+
+            props.attributes.form_id =  props.attributes.form_id &&  props.attributes.form_id != '0' ?  props.attributes.form_id : false;
 
             return [
                 !!focus && el(
@@ -55,8 +56,8 @@
                     el(
                         SelectControl,
                         {
-                            label:  __('Gravity Form', 'gutenberg-gravityforms'),
-                            value: parseInt(props.attributes.form_id),
+                            label: __('Gravity Form', 'gutenberg-gravityforms'),
+                            value: props.attributes.form_id ? parseInt(props.attributes.form_id) : 0,
                             instanceId: 'gravity-form-selector',
                             onChange: function (value) {
                                 props.setAttributes({form_id: value});
@@ -69,10 +70,11 @@
                         {
                             'style': {
                                 'padding': '8px 0 0 0',
-                                'font-size': '11px',
-                                'font-style': 'italic',
+                                'fontSize': '11px',
+                                'fontStyle': 'italic',
                                 'color': '#5A5A5A',
-                                'margin-top': '-22px'
+                                'marginTop': '-22px',
+                                'marginBottom': '22px'
                             },
                         },
                         'Cant find your form? Make sure it is active.'
@@ -111,11 +113,14 @@
                         }
                     )
                 ),
-                el('div', {}, __('Gravity Form: ') + gb_gravityforms_block_params.formMeta[ props.attributes.form_id ].title)
+                el('div',
+                    {key: 'gravity-form'},
+                    props.attributes.form_id ? __('Gravity Form: ') + gb_gravityforms_block_params.formMeta[props.attributes.form_id].title : 'Choose Your Form'
+                )
             ];
         },
-        save: function () {
-            return null
+        save: function (props) {
+            return el('p', {}, props.attributes.form_id);
         },
     });
 })(

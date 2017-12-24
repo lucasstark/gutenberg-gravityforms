@@ -13,7 +13,7 @@
  */
 
 // Exit if accessed directly.
-if ( !defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
@@ -64,14 +64,19 @@ class GB_Gravity_Forms {
 		$this->assets_version = '1.0.0';
 
 
-		add_action( 'enqueue_block_editor_assets', array( $this, 'on_enqueue_block_editor_assets' ) );
 		add_action( 'plugins_loaded', array( $this, 'on_plugins_loaded' ) );
 	}
 
 
 	public function on_plugins_loaded() {
-		require $this->_dir . '/inc/blocks/class-gb-gravityforms-form-block.php';
-		$this->_form_block_output = new GB_Gravity_Forms_Form_Block();
+
+		if ( class_exists( 'GFAPI' ) ) {
+
+			add_action( 'enqueue_block_editor_assets', array( $this, 'on_enqueue_block_editor_assets' ) );
+
+			require $this->_dir . '/inc/blocks/class-gb-gravityforms-form-block.php';
+			$this->_form_block_output = new GB_Gravity_Forms_Form_Block();
+		}
 	}
 
 
@@ -93,8 +98,17 @@ class GB_Gravity_Forms {
 			$this->assets_version );
 
 
-		$forms    = array();
-		$formmeta = array();
+		$forms = array(
+			0 => array(
+				'value' => 0,
+				'label' => __( 'Choose Your Form', 'gutenberg-gravityforms' )
+			)
+		);
+
+		$formmeta = array(
+			0 => __( 'Choose Your Form', 'gutenberg-gravityforms' )
+		);
+
 		foreach ( GFAPI::get_forms() as $form ) {
 			$forms[] = array(
 				'value' => $form['id'],

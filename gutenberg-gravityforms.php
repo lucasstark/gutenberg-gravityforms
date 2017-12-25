@@ -6,6 +6,7 @@
  * Author: lucasstark
  * Author URI: https://elementstark.com/
  * Version: 1.0.0
+ * Text Domain: gutenberg-gravityforms
  * License: GPL2+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  *
@@ -30,7 +31,7 @@ class GB_Gravity_Forms {
 	 * Registers the plugin.
 	 */
 	public static function register() {
-		if ( self::$instance == null ) {
+		if ( null self::$instance ) {
 			self::$instance = new GB_Gravity_Forms();
 		}
 	}
@@ -69,7 +70,6 @@ class GB_Gravity_Forms {
 
 
 	public function on_plugins_loaded() {
-
 		if ( class_exists( 'GFAPI' ) ) {
 
 			add_action( 'enqueue_block_editor_assets', array( $this, 'on_enqueue_block_editor_assets' ) );
@@ -81,7 +81,6 @@ class GB_Gravity_Forms {
 
 
 	public function on_enqueue_block_editor_assets() {
-
 		// Scripts.
 		wp_enqueue_script(
 			'gb-gravityforms-block', // Handle.
@@ -95,38 +94,35 @@ class GB_Gravity_Forms {
 			'gb-gravityforms-block', // Handle.
 			$this->_url . '/assets/css/editor.css',
 			array( 'wp-blocks', 'wp-i18n', 'wp-element' ), // Dependencies, defined above.
-			$this->assets_version );
+			$this->assets_version
+		);
 
 
 		$forms = array(
 			0 => array(
 				'value' => 0,
-				'label' => __( 'Choose Your Form', 'gutenberg-gravityforms' )
-			)
+				'label' => __( 'Choose Your Form', 'gutenberg-gravityforms' ),
+			),
 		);
 
 		$formmeta = array(
-			0 => __( 'Choose Your Form', 'gutenberg-gravityforms' )
+			0 => __( 'Choose Your Form', 'gutenberg-gravityforms' ),
 		);
 
 		foreach ( GFAPI::get_forms() as $form ) {
 			$forms[] = array(
 				'value' => $form['id'],
-				'label' => $form['title']
+				'label' => $form['title'],
 			);
 
 			$formmeta[ $form['id'] ] = array( 'title' => $form['title'] );
-
 		}
 
 		wp_localize_script( 'gb-gravityforms-block', 'gb_gravityforms_block_params', array(
 			'forms'    => $forms,
-			'formMeta' => $formmeta
+			'formMeta' => $formmeta,
 		) );
-
-
 	}
-
 }
 
 GB_Gravity_Forms::register();

@@ -77,12 +77,12 @@
                                 'marginBottom': '22px'
                             },
                         },
-                        'Cant find your form? Make sure it is active.'
+                        __('Cant find your form? Make sure it is active.', 'gutenberg-gravityforms')
                     ),
                     el(
                         ToggleControl,
                         {
-                            label: 'Display form title',
+                            label: __('Display form title', 'gutenberg-gravityforms'),
                             checked: props.attributes.displayFormTitle,
                             instanceId: 'gravity-form-display-form-title',
                             onChange: function (event) {
@@ -93,7 +93,7 @@
                     el(
                         ToggleControl,
                         {
-                            label: 'Display form description',
+                            label: __('Display form description', 'gutenberg-gravityforms'),
                             checked: props.attributes.displayFormDescription,
                             instanceId: 'gravity-form-display-form-description',
                             onChange: function (event) {
@@ -104,7 +104,7 @@
                     el(
                         ToggleControl,
                         {
-                            label: 'Enable Ajax',
+                            label: __('Enable Ajax', 'gutenberg-gravityforms'),
                             checked: props.attributes.enableAjax,
                             instanceId: 'gravity-form-display-enable-ajax',
                             onChange: function (event) {
@@ -115,7 +115,7 @@
                 ),
                 el('div',
                     {key: 'gravity-form'},
-                    props.attributes.form_id ? __('Gravity Form: ') + gb_gravityforms_block_params.formMeta[props.attributes.form_id].title : 'Choose Your Form'
+                    props.attributes.form_id ? __('Gravity Form: ') + gb_gravityforms_block_params.formMeta[props.attributes.form_id].title : __('Choose Your Form', 'gutenberg-gravityforms')
                 )
             ];
         },
